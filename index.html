@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>My Web 1.0 Project</title>
+  <meta name="description" content="A simple, responsive demo built with HTML, CSS and JavaScript." />
+
+  <!-- favicon: uses an external URL for convenience (replace with local file if you want) -->
+  <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/1055/1055687.png" type="image/png" />
+
+  <!-- stylesheet -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <h1 class="brand">My Web 1.0</h1>
+      <nav class="nav" aria-label="Main navigation">
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section id="home" class="card">
+      <h2>Hello, world!</h2>
+      <p>Welcome — this is a small, fast, responsive project built with HTML, CSS and vanilla JavaScript.</p>
+      <div class="actions">
+        <button id="colorBtn" aria-label="Change page background color">🎨 Change Background</button>
+        <button id="resetBtn" aria-label="Reset page background">♻ Reset</button>
+      </div>
+    </section>
+
+    <section id="about" class="card">
+      <h2>About</h2>
+      <p>This page demonstrates a clean layout, responsive styles, and a small interactive form — perfect for practicing Git & deployments.</p>
+    </section>
+
+    <section id="contact" class="card">
+      <h2>Contact</h2>
+      <form id="contactForm" novalidate>
+        <label class="sr-only" for="name">Name</label>
+        <input id="name" name="name" type="text" placeholder="Your name" required />
+
+        <label class="sr-only" for="email">Email</label>
+        <input id="email" name="email" type="email" placeholder="your@email.com" required />
+
+        <label class="sr-only" for="message">Message</label>
+        <textarea id="message" name="message" placeholder="Your message" required></textarea>
+
+        <div class="form-row">
+          <button type="submit">Send Message</button>
+        </div>
+      </form>
+
+      <p id="formMessage" role="status" aria-live="polite"></p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <small>© 2025 My Web 1.0 Project — Built by You</small>
+    </div>
+  </footer>
+
+  <!-- script as last element for deterministic load -->
+  <script src="script.js"></script>
+</body>
+</html>
