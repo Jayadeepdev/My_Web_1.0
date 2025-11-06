@@ -1,61 +1,40 @@
-// Cache DOM elements for efficiency
+const modeToggle = document.getElementById('modeToggle');
 const colorBtn = document.getElementById('colorBtn');
 const resetBtn = document.getElementById('resetBtn');
-const contactForm = document.getElementById('contactForm');
-const formMessage = document.getElementById('formMessage');
 
-const initialBg = getComputedStyle(document.body).backgroundColor || '#f7f9fb';
+const lightBackgrounds = ['#f7f9fb', '#fff0f6', '#e0f7fa', '#fff8e1', '#e8f5e9']; // light pastels
+const darkBackgrounds = ['#121212', '#1a1a1a', '#222222', '#2c2c2c', '#333333']; // dark shades
 
-// Generate a random pastel color
-function randomColor() {
-  const r = Math.floor(150 + Math.random() * 105);
-  const g = Math.floor(150 + Math.random() * 105);
-  const b = Math.floor(150 + Math.random() * 105);
-  return `rgb(${r}, ${g}, ${b})`;
-}
+modeToggle.textContent = '🌙';
+modeToggle.title = 'Switch to Dark Mode';
 
-// Change background handler
-colorBtn?.addEventListener('click', () => {
-  document.body.style.backgroundColor = randomColor();
+modeToggle.addEventListener('click', () => {
+  document.body.classList.toggle('dark-mode');
+  if (document.body.classList.contains('dark-mode')) {
+    modeToggle.textContent = '☀️';
+    modeToggle.title = 'Switch to Light Mode';
+    document.body.style.backgroundColor = '#121212'; // reset dark bg
+  } else {
+    modeToggle.textContent = '🌙';
+    modeToggle.title = 'Switch to Dark Mode';
+    document.body.style.backgroundColor = '#f7f9fb'; // reset light bg
+  }
 });
 
-// Reset background handler
-resetBtn?.addEventListener('click', () => {
-  document.body.style.backgroundColor = initialBg;
+colorBtn.addEventListener('click', () => {
+  if (document.body.classList.contains('dark-mode')) {
+    const color = darkBackgrounds[Math.floor(Math.random() * darkBackgrounds.length)];
+    document.body.style.backgroundColor = color;
+  } else {
+    const color = lightBackgrounds[Math.floor(Math.random() * lightBackgrounds.length)];
+    document.body.style.backgroundColor = color;
+  }
 });
 
-// Form submit and validation handler
-contactForm?.addEventListener('submit', (ev) => {
-  ev.preventDefault();
-
-  const name = document.getElementById('name')?.value.trim();
-  const email = document.getElementById('email')?.value.trim();
-  const message = document.getElementById('message')?.value.trim();
-
-  // Clear previous classes
-  formMessage.className = '';
-
-  if (!name || !email || !message) {
-    formMessage.textContent = '⚠ Please fill in all the fields before submitting.';
-    formMessage.classList.add('form-error');
-    formMessage.focus(); // For screen readers to announce alert
-    return;
+resetBtn.addEventListener('click', () => {
+  if (document.body.classList.contains('dark-mode')) {
+    document.body.style.backgroundColor = '#121212';
+  } else {
+    document.body.style.backgroundColor = '#f7f9fb';
   }
-
-  // Simple email format check
-  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (!emailPattern.test(email)) {
-    formMessage.textContent = '⚠ Please enter a valid email address.';
-    formMessage.classList.add('form-error');
-    formMessage.focus();
-    return;
-  }
-
-  // Success message
-  formMessage.textContent = `✅ Thanks, ${name}! Your message has been sent.`;
-  formMessage.classList.add('form-success');
-  formMessage.focus();
-
-  // Reset the form but keep message visible
-  contactForm.reset();
 });
