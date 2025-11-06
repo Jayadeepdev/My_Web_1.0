@@ -6,33 +6,25 @@ const formMessage = document.getElementById('formMessage');
 
 const initialBg = getComputedStyle(document.body).backgroundColor || '#f7f9fb';
 
-// Flag to track theme state; false means light mode initially
-let isDarkMode = false;
+// Generate a random pastel color
+function randomColor() {
+  const r = Math.floor(150 + Math.random() * 105);
+  const g = Math.floor(150 + Math.random() * 105);
+  const b = Math.floor(150 + Math.random() * 105);
+  return `rgb(${r}, ${g}, ${b})`;
+}
 
-// Toggle dark/light mode background and update button label
+// Change background handler
 colorBtn?.addEventListener('click', () => {
-  isDarkMode = !isDarkMode;
-  if (isDarkMode) {
-    document.body.classList.add('dark-theme');
-    colorBtn.textContent = '☀️ Switch to Light Mode';
-    colorBtn.setAttribute('aria-label', 'Switch to Light Mode');
-  } else {
-    document.body.classList.remove('dark-theme');
-    colorBtn.textContent = '🌙 Switch to Dark Mode';
-    colorBtn.setAttribute('aria-label', 'Switch to Dark Mode');
-  }
+  document.body.style.backgroundColor = randomColor();
 });
 
-// Reset background and form states
+// Reset background handler
 resetBtn?.addEventListener('click', () => {
-  isDarkMode = false;
-  document.body.classList.remove('dark-theme');
-  colorBtn.textContent = '🌙 Switch to Dark Mode';
-  colorBtn.setAttribute('aria-label', 'Switch to Dark Mode');
   document.body.style.backgroundColor = initialBg;
 });
 
-// Form submit and validation handler (unchanged)
+// Form submit and validation handler
 contactForm?.addEventListener('submit', (ev) => {
   ev.preventDefault();
 
@@ -40,15 +32,17 @@ contactForm?.addEventListener('submit', (ev) => {
   const email = document.getElementById('email')?.value.trim();
   const message = document.getElementById('message')?.value.trim();
 
+  // Clear previous classes
   formMessage.className = '';
 
   if (!name || !email || !message) {
     formMessage.textContent = '⚠ Please fill in all the fields before submitting.';
     formMessage.classList.add('form-error');
-    formMessage.focus();
+    formMessage.focus(); // For screen readers to announce alert
     return;
   }
 
+  // Simple email format check
   const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!emailPattern.test(email)) {
     formMessage.textContent = '⚠ Please enter a valid email address.';
@@ -57,9 +51,11 @@ contactForm?.addEventListener('submit', (ev) => {
     return;
   }
 
+  // Success message
   formMessage.textContent = `✅ Thanks, ${name}! Your message has been sent.`;
   formMessage.classList.add('form-success');
   formMessage.focus();
 
+  // Reset the form but keep message visible
   contactForm.reset();
 });
